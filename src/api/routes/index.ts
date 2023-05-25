@@ -1,5 +1,5 @@
 import  { Application } from 'express';
-import { homepageRouter } from '@routes/homepage/homepage.route';
+import { homepageRouter } from '@root/api/routes/auth/auth.router';
 
 
 const BASE_PATH = '/api/v1'

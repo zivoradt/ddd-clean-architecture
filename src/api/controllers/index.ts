@@ -1,2 +1,2 @@
 
-import {HomepageController} from "../controllers/homepage/homepageController";
+import {AuthLoginController} from "./auth/auth.controller";

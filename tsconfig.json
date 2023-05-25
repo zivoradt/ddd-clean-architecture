@@ -115,6 +115,7 @@
       "@controller/*": [
         "/src/api/controllers/*"
       ],
+      "@root/*": ["src/*"],
       "@routes/*": ["src/api/routes/*"],
       "@baseInfra/*": ["src/domain/core/infra/*"],
       "@baseServices/*": ["src/domain/core/services/*"],
