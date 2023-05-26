@@ -1,11 +1,24 @@
 import 'reflect-metadata';
 import { AuthLoginController } from '@root/api/controllers/auth/authLogin.controller';
 import { AuthService } from '@root/application/Services/Auth/AuthService';
-import {container} from 'tsyringe';
+import {container,  InjectionToken} from 'tsyringe';
 
-export default ()=>{
-    container.register("IServices", {useClass: AuthService});
+export const login = ()=>{
 
+
+let loginController: AuthLoginController;
+// Register the authService instance
+container.register('IServices', { useClass: AuthService});
+
+
+return loginController = container.resolve(AuthLoginController);
+  
+     
 }
-export const loginController = container.resolve(AuthLoginController);
+
+
+
+
+
+
 

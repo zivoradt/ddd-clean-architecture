@@ -1,6 +1,5 @@
 import { AuthResult, IServices } from "@root/domain/core/application/IServices";
 import { injectable } from "tsyringe";
-
 @injectable()
 export class AuthService implements IServices{
 

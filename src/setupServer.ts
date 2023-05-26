@@ -4,9 +4,8 @@ import http from 'http'
 import Routes from "@routes/index";
 import Logger from "bunyan";
 import { config } from "@root/config";
-import dependencies from '@dependencies/dependencies';
-
-import bodyParser, { json, urlencoded } from "body-parser";
+import {login} from '@dependencies/dependencies';
+import { json, urlencoded } from "body-parser";
 
 const log: Logger  = config.createLogger('setupServer');
 
@@ -22,7 +21,7 @@ export class setupServer {
     }
 
     protected dependenciesInjection(){
-        dependencies();
+       
     }
 
     protected baseMiddlewere(app: Application){

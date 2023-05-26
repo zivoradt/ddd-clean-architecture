@@ -11,7 +11,7 @@ import { inject, injectable } from "tsyringe";
 export class AuthLoginController extends BaseController {
     
 
-    constructor(@inject(IServices) protected authService: IServices) {
+    constructor(@inject("IServices") protected authService: IServices) {
         super();
     }
 
