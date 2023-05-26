@@ -1,5 +1,5 @@
 import  { Application } from 'express';
-import { homepageRouter } from '@root/api/routes/auth/auth.router';
+import { authRouter} from '@root/api/routes/auth/auth.router';
 
 
 const BASE_PATH = '/api/v1'
@@ -14,7 +14,7 @@ class Routes {
 
   public initializeRoutes(): void {
     
-    this.app.use(BASE_PATH, homepageRouter.routes());
+    this.app.use(BASE_PATH, authRouter.routes());
     
   }
 }

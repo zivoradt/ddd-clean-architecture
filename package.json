@@ -27,6 +27,8 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "mongoose": "^7.0.3",
+    "reflect-metadata": "^0.1.13",
+    "tsyringe": "^4.7.0",
     "typescript-transform-paths": "^3.4.6"
   },
   "devDependencies": {

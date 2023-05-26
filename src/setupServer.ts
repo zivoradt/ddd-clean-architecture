@@ -1,8 +1,10 @@
+import 'reflect-metadata'
 import { Application} from "express";
 import http from 'http'
 import Routes from "@routes/index";
 import Logger from "bunyan";
 import { config } from "@root/config";
+import dependencies from '@dependencies/dependencies';
 
 import bodyParser, { json, urlencoded } from "body-parser";
 
@@ -18,6 +20,11 @@ export class setupServer {
         this.app = app;
 
     }
+
+    protected dependenciesInjection(){
+        dependencies();
+    }
+
     protected baseMiddlewere(app: Application){
        
         app.use(json({limit: '50mb'}));
@@ -44,6 +51,7 @@ export class setupServer {
     }
 
     public start(){
+        this.dependenciesInjection();
         this.baseMiddlewere(this.app);
         this.startServer(this.app);
         this.startRouter(this.app);

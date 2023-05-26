@@ -1,2 +1,2 @@
 
-import {AuthLoginController} from "./auth/auth.controller";
+import {AuthLoginController} from "./auth/authLogin.controller";

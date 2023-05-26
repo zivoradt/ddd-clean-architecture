@@ -119,6 +119,7 @@
       "@routes/*": ["src/api/routes/*"],
       "@baseInfra/*": ["src/domain/core/infra/*"],
       "@baseServices/*": ["src/domain/core/services/*"],
+      "@dependencies/*": ["src/dependencies/*"],
     }
   }
 }
