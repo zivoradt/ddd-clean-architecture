@@ -1,3 +1,4 @@
+import { Dependencies} from './dependencies/dependencies';
 import 'reflect-metadata'
 import { Application} from "express";
 import http from 'http'
@@ -6,6 +7,7 @@ import Logger from "bunyan";
 import { config } from "@root/config";
 import {login} from '@dependencies/dependencies';
 import { json, urlencoded } from "body-parser";
+import { DependencyContainer, container } from 'tsyringe';
 
 const log: Logger  = config.createLogger('setupServer');
 
@@ -17,11 +19,6 @@ export class setupServer {
     private app: Application;
     constructor(app: Application) {
         this.app = app;
-
-    }
-
-    protected dependenciesInjection(){
-       
     }
 
     protected baseMiddlewere(app: Application){
@@ -49,11 +46,12 @@ export class setupServer {
         this.httpServer(httpSever);
     }
 
-    public start(){
-        this.dependenciesInjection();
+    public start():any{
+        
         this.baseMiddlewere(this.app);
         this.startServer(this.app);
         this.startRouter(this.app);
+        
         
     }
 
