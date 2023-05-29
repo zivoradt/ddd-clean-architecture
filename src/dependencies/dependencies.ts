@@ -3,6 +3,7 @@ import { AuthLoginController } from '@root/api/controllers/auth/authLogin.contro
 import { AuthService } from '@root/application/Services/Auth/AuthService';
 import {container,  DependencyContainer,  InjectionToken} from 'tsyringe';
 import { AuthRegisterController } from '@root/api/controllers/auth/authRegister.controller';
+import { JwtTokenGenerator } from '@root/infrastructure/authentification/JwtTokenGenerator';
 
 export const login = ()=>{
 
@@ -35,7 +36,8 @@ export class Dependencies{
         
         this.authLoginController.register('IServices', { useClass: AuthService});
         
-        this.registerController.register('IServices', { useClass: AuthService})
+        this.registerController.register('IJwtTokenGenerator', {useClass: JwtTokenGenerator});
+        this.registerController.register('IServices', { useClass: AuthService});
     }
 
 }

@@ -1,6 +1,6 @@
 import { container } from 'tsyringe';
-import {  diContainer } from './../../../dependencies/dependencies';
-import { BaseRouter } from '../../../domain/core/infra/BaseRouter';
+import {  diContainer } from '@dependencies/dependencies';
+import { BaseRouter } from '@baseInfra/BaseRouter';
 import { Router } from 'express';
 import { AuthLoginController } from '@root/api/controllers/auth/authLogin.controller';
 import { AuthRegisterController } from '@root/api/controllers/auth/authRegister.controller';
@@ -13,7 +13,7 @@ export class AuthRouter extends BaseRouter{
     constructor() {
         super();
         
-        this.loginController = diContainer.authLoginController.resolve(AuthLoginController);
+        this.loginController = diContainer.authLoginController.resolve<AuthLoginController>(AuthLoginController);
         this.registerController = diContainer.registerController.resolve(AuthRegisterController);
     }
 

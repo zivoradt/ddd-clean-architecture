@@ -1,16 +1,29 @@
+import { IJwtTokenGenerator } from '@appliciation/common/interface/authentification/IJwtTokenGenerator';
 import { AuthResult, IServices } from "@root/domain/core/application/IServices";
-import { injectable } from "tsyringe";
+import { inject, injectable } from "tsyringe";
+import {v4 as uuidv4} from 'uuid';
+
 @injectable()
 export class AuthService implements IServices{
+    private readonly jwtTokenGenerator: IJwtTokenGenerator;
+    constructor(@inject("IJwtTokenGenerator")jwtTokenGenerator: IJwtTokenGenerator) {
+        this.jwtTokenGenerator = jwtTokenGenerator
+    }
+
 
     public async register(FirstName: string, LastName: string, Email: string, Password: string ): Promise<AuthResult> {
+
+        const userId = uuidv4();
+
+        const token = this.jwtTokenGenerator.generateToken(userId, FirstName, LastName);
+
         try {
             const dto: AuthResult = {
-                id: "",
+                id: userId,
                 FirstName: FirstName,
                 LastName: LastName,
                 Email: Email,
-                Token: "" 
+                Token: token 
             }
             return dto as AuthResult;
         } catch (error) {

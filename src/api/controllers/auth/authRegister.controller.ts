@@ -17,7 +17,8 @@ export class AuthRegisterController extends BaseController{
 
             
             const authResult: AuthResult = await this.authService.register(dto.FirstName, dto.LastName, dto.Email, dto.Password);
-            
+
+            this.req.session = {jwt: authResult};
 
             this.res.status(HTTP_STATUS.OK).json({ message: 'User is registered', dto: authResult });
         } catch (error) {

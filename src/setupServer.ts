@@ -1,13 +1,15 @@
-import { Dependencies} from './dependencies/dependencies';
 import 'reflect-metadata'
+import cors from 'cors';
 import { Application} from "express";
 import http from 'http'
 import Routes from "@routes/index";
 import Logger from "bunyan";
 import { config } from "@root/config";
-import {login} from '@dependencies/dependencies';
 import { json, urlencoded } from "body-parser";
-import { DependencyContainer, container } from 'tsyringe';
+import cookieSession from 'cookie-session';
+import cookieParser from 'cookie-parser';
+
+
 
 const log: Logger  = config.createLogger('setupServer');
 
@@ -25,8 +27,22 @@ export class setupServer {
        
         app.use(json({limit: '50mb'}));
         app.use(urlencoded({ extended: true, limit: '50mb' }));
+    }
 
-        
+    protected cookieMiddleware(app: Application){
+        app.use(cookieParser());
+         app.use(cors({
+            origin: 'http://localhost:3001',
+            credentials: true,
+            optionsSuccessStatus: 200,
+            methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+        })) 
+        app.use(cookieSession({
+            name: 'session',
+            keys: [config.TOKEN_KEY1!, config.TOKEN_KEY2!],
+            maxAge: 24 * 7 * 3600000,
+            secure: config.NODE_ENV !== 'development'
+        }))
     }
 
     protected startRouter(app: Application) {
@@ -47,7 +63,7 @@ export class setupServer {
     }
 
     public start():any{
-        
+        this.cookieMiddleware(this.app);
         this.baseMiddlewere(this.app);
         this.startServer(this.app);
         this.startRouter(this.app);

@@ -19,10 +19,11 @@ export class AuthLoginController extends BaseController {
         try {
             const dto: LoginRequest = this.req.body as LoginRequest;
            
+            console.log(this.req.session);
             const authResult = await this.authService.login(dto.Email, dto.Password);
               
-
-            return this.res.status(HTTP_STATUS.OK).json({ message: 'User is logged in', dto: authResult });
+            
+            this.res.status(HTTP_STATUS.OK).json({ message: 'User is logged in', dto: authResult });
         } catch (error) {
             this.res.json({ message: 'Something went wrong', error: error });
         }
