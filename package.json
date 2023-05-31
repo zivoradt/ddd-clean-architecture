@@ -1,6 +1,6 @@
 {
   "name": "ddd-clean-architecture",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "clean architecture project",
   "main": "app.js",
   "scripts": {
