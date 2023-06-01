@@ -1,3 +1,4 @@
+import { injectable } from "tsyringe";
 
 
 export interface IJwtTokenGenerator{

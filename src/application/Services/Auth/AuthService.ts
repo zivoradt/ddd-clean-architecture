@@ -1,4 +1,3 @@
-import { IJwtTokenDto } from './../../dto/Auth/IJwtTokenDto';
 import { IJwtTokenGenerator } from '@appliciation/common/interface/authentification/IJwtTokenGenerator';
 import {  IServices } from "@root/domain/core/application/IServices";
 import { AuthResult } from '@root/application/dto/Auth/IAuthResultDto';
@@ -8,7 +7,7 @@ import {v4 as uuidv4} from 'uuid';
 @injectable()
 export class AuthService implements IServices{
     private readonly jwtTokenGenerator: IJwtTokenGenerator;
-    constructor(@inject("IJwtTokenGenerator")jwtTokenGenerator: IJwtTokenGenerator) {
+    constructor(@inject('IJwtTokenGenerator')jwtTokenGenerator: IJwtTokenGenerator) {
         this.jwtTokenGenerator = jwtTokenGenerator
     }
 
