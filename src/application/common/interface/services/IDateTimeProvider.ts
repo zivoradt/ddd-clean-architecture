@@ -1,5 +1,5 @@
 
 
 export interface IDateTimeProvider{
-    now(): Date
+    now(minutes: number): Date
 }

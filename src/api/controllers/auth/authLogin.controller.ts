@@ -19,7 +19,7 @@ export class AuthLoginController extends BaseController {
         try {
             const dto: LoginRequest = this.req.body as LoginRequest;
            
-            console.log(this.req.session);
+            console.log(this.req.session?.jwt);
             const authResult = await this.authService.login(dto.Email, dto.Password);
               
             

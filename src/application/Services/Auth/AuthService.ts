@@ -1,5 +1,7 @@
+import { IJwtTokenDto } from './../../dto/Auth/IJwtTokenDto';
 import { IJwtTokenGenerator } from '@appliciation/common/interface/authentification/IJwtTokenGenerator';
-import { AuthResult, IServices } from "@root/domain/core/application/IServices";
+import {  IServices } from "@root/domain/core/application/IServices";
+import { AuthResult } from '@root/application/dto/Auth/IAuthResultDto';
 import { inject, injectable } from "tsyringe";
 import {v4 as uuidv4} from 'uuid';
 
@@ -15,7 +17,7 @@ export class AuthService implements IServices{
 
         const userId = uuidv4();
 
-        const token = this.jwtTokenGenerator.generateToken(userId, FirstName, LastName);
+        const token: string = this.jwtTokenGenerator.generateToken(userId, FirstName, LastName);
 
         try {
             const dto: AuthResult = {
@@ -23,7 +25,8 @@ export class AuthService implements IServices{
                 FirstName: FirstName,
                 LastName: LastName,
                 Email: Email,
-                Token: token 
+                Token: token
+   
             }
             return dto as AuthResult;
         } catch (error) {

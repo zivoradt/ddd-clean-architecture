@@ -1,6 +1,8 @@
+import { IJwtTokenDto } from './../../../application/dto/Auth/IJwtTokenDto';
 import HTTP_STATUS  from "http-status-codes";
 import {BaseController} from '../../../domain/core/infra/BaseController';
-import { AuthResult, IServices } from '@root/domain/core/application/IServices';
+import { IServices } from '@root/domain/core/application/IServices';
+import { AuthResult } from "@root/application/dto/Auth/IAuthResultDto";
 import { RegisterRequest } from "@root/application/dto/Auth/registerDto";
 import { inject, injectable } from "tsyringe";
 
@@ -17,8 +19,10 @@ export class AuthRegisterController extends BaseController{
 
             
             const authResult: AuthResult = await this.authService.register(dto.FirstName, dto.LastName, dto.Email, dto.Password);
+            const token: string = authResult.Token;
+            
 
-            this.req.session = {jwt: authResult};
+            this.req.session = {jwt: token};
 
             this.res.status(HTTP_STATUS.OK).json({ message: 'User is registered', dto: authResult });
         } catch (error) {
