@@ -27,6 +27,7 @@ export class Dependencies{
         
         this.authLoginController.register('IServices', { useClass: AuthService});
         
+        this.registerController.register('IUserRepository', {useClass: })
         this.registerController.register('DateProvider', {useClass: DateTimeProvider});
         this.registerController.register('JwtSettings', {useClass: JwtSettings})
         this.registerController.register('IJwtTokenGenerator', {useClass: JwtTokenGenerator});
