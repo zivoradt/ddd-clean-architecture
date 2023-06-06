@@ -1,7 +1,8 @@
+import { User } from "@root/domain/entities/user";
 import { injectable } from "tsyringe";
 
 
 export interface IJwtTokenGenerator{
 
-    generateToken(userId: string, firstName: string, lastName: string): string
+    generateToken(user: User): string
 }

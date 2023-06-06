@@ -1,10 +1,8 @@
+import { User } from '@root/domain/entities/user';
 import { IJwtTokenDto } from './IJwtTokenDto';
 
 export interface AuthResult{
-    id: string,
-    FirstName: string,
-    LastName: string,
-    Email: string,
+    User: User
     Token: string
 }
 

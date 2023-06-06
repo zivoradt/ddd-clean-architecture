@@ -5,6 +5,7 @@ import { IJwtTokenGenerator } from '@appliciation/common/interface/authentificat
 import jwt from 'jsonwebtoken';
 import { inject, injectable } from 'tsyringe';
 import { IDateTimeProvider } from '@root/application/common/interface/services/IDateTimeProvider';
+import { User } from '@root/domain/entities/user';
 
 @injectable()
 export class JwtTokenGenerator implements IJwtTokenGenerator{
@@ -16,7 +17,7 @@ export class JwtTokenGenerator implements IJwtTokenGenerator{
         this.dateProvided = dateProvider;
     }
 
-    public generateToken(userId: string, firstName: string, lastName: string): string {
+    public generateToken(user: User): string {
         
         
         const tokenDto : IJwtTokenDto = {
@@ -24,9 +25,9 @@ export class JwtTokenGenerator implements IJwtTokenGenerator{
             audience: this.jwtSettings.audience(),
             expire: this.dateProvided.now(this.jwtSettings.expiryMinutes()),
             payload: {
-                id: userId,
-                FirstName: firstName,
-                LastName: lastName
+                id: user.id!,
+                FirstName: user.FirstName,
+                LastName: user.LastName
             }
 
         };

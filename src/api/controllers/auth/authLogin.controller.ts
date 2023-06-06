@@ -19,15 +19,21 @@ export class AuthLoginController extends BaseController {
         try {
             const dto: LoginRequest = this.req.body as LoginRequest;
            
-            console.log(this.req.session?.jwt);
             const authResult = await this.authService.login(dto.Email, dto.Password);
+
+            const token: string = authResult.Token;
+            
+
+            this.req.session = {jwt: token};
               
             
-            this.res.status(HTTP_STATUS.OK).json({ message: 'User is logged in', dto: authResult });
+            this.res.status(HTTP_STATUS.OK).json({ message: 'User is logged in', ...authResult });
         } catch (error) {
-            this.res.json({ message: 'Something went wrong', error: error });
+            this.next(error);
         }
     }
 }
+
+
 
 

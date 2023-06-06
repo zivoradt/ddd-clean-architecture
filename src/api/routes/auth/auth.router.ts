@@ -19,8 +19,8 @@ export class AuthRouter extends BaseRouter{
 
     public routes():Router{
 
-        this.router.post('/register', (req, res)=>this.registerController.execute(req, res));
-        this.router.post('/login', (req, res)=>this.loginController.execute(req, res));
+        this.router.post('/register', (req, res, next)=>this.registerController.execute(req, res, next));
+        this.router.post('/login', (req, res, next)=>this.loginController.execute(req, res, next));
 
         return this.router;
     }

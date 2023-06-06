@@ -1,6 +1,7 @@
 import 'reflect-metadata'
+import 'express-async-errors';
 import cors from 'cors';
-import { Application} from "express";
+import { Application, NextFunction, Request, Response} from "express";
 import http from 'http'
 import Routes from "@routes/index";
 import Logger from "bunyan";
@@ -8,7 +9,11 @@ import { config } from "@root/config";
 import { json, urlencoded } from "body-parser";
 import cookieSession from 'cookie-session';
 import cookieParser from 'cookie-parser';
+import { ErrorHandler } from './global/ErrorHandler';
+import { BaseError } from './global/BaseError';
 
+
+const logger1 = config.createLogger('Error');
 
 
 const log: Logger  = config.createLogger('setupServer');
@@ -45,6 +50,34 @@ export class setupServer {
         }))
     }
 
+    protected globalErrorHandler(app: Application){
+
+        const logger = config.createLogger('ErrorHandler');
+        const errorHandler = new ErrorHandler(logger);
+
+        app.use((err: Error, _req: Request, res: Response, next: NextFunction)=> {
+            if (errorHandler.isTrustedError(err)) {
+                errorHandler.customErrorHandler(err, res);
+            }
+            else{
+                errorHandler.ErrorHandler(err, res);
+            }
+           
+          });
+
+        process.on( 'uncaughtException', async (error: Error, res: Response) =>{
+            
+            if(!errorHandler.isTrustedError(error)) process.exit(1);
+        });
+
+        process.on('unhandledRejection', (reason: Error)=>{
+            throw reason;
+        });
+
+          
+       
+    }
+
     protected startRouter(app: Application) {
         const routes: Routes = new Routes(app);
         routes.initializeRoutes();
@@ -67,6 +100,7 @@ export class setupServer {
         this.baseMiddlewere(this.app);
         this.startServer(this.app);
         this.startRouter(this.app);
+        this.globalErrorHandler(this.app);
         
         
     }

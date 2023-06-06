@@ -1,11 +1,11 @@
 import 'reflect-metadata';
-import { AuthLoginController } from '@root/api/controllers/auth/authLogin.controller';
 import { AuthService } from '@root/application/Services/Auth/AuthService';
 import {container,  DependencyContainer,  InjectionToken} from 'tsyringe';
-import { AuthRegisterController } from '@root/api/controllers/auth/authRegister.controller';
 import { JwtTokenGenerator } from '@root/infrastructure/authentification/JwtTokenGenerator';
 import { JwtSettings } from '../infrastructure/authentification/JwtSettings';
 import { DateTimeProvider } from '@root/infrastructure/services/DateTimeProvider';
+import { UserRepository } from '@root/infrastructure/persistance/UserRepository';
+import { IUserRepository } from '@root/application/common/interface/persistance/IUserRepository';
 
 
 
@@ -26,8 +26,8 @@ export class Dependencies{
     public diContainer(){
         
         this.authLoginController.register('IServices', { useClass: AuthService});
-        
-        this.registerController.register('IUserRepository', {useClass: })
+
+        this.registerController.registerSingleton<IUserRepository>('IUserRepository', UserRepository);
         this.registerController.register('DateProvider', {useClass: DateTimeProvider});
         this.registerController.register('JwtSettings', {useClass: JwtSettings})
         this.registerController.register('IJwtTokenGenerator', {useClass: JwtTokenGenerator});

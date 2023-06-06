@@ -24,9 +24,10 @@ export class AuthRegisterController extends BaseController{
 
             this.req.session = {jwt: token};
 
-            this.res.status(HTTP_STATUS.OK).json({ message: 'User is registered', dto: authResult });
+            this.res.status(HTTP_STATUS.OK).json({ message: 'User is registerd', ...authResult });
         } catch (error) {
-            this.res.json({ message: 'Something went wrong', error: error });
+            
+            this.next(error);
         }
     }
 
