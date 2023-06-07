@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { AuthService } from '@root/application/Services/Auth/AuthService';
+import { AuthService } from '@root/application/Services/Auth/commands/AuthCommandService';
 import {container,  DependencyContainer,  InjectionToken} from 'tsyringe';
 import { JwtTokenGenerator } from '@root/infrastructure/authentification/JwtTokenGenerator';
 import { JwtSettings } from '../infrastructure/authentification/JwtSettings';

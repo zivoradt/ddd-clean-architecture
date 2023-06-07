@@ -1,25 +1,26 @@
 import HTTP_STATUS from "http-status-codes";
 import { BaseController } from '../../../domain/core/infra/BaseController'
-import { LoginRequest } from "@root/application/dto/Auth/loginDto";
-import {  IServices } from "@root/domain/core/application/IServices";
-import { AuthService } from "@root/application/Services/Auth/AuthService";
 import { inject, injectable } from "tsyringe";
+import { IAuthCommandServices } from "@root/application/Services/Auth/commands/IAuthCommandServices";
+import { RegisterRequest } from "@root/application/Services/Auth/common/registerDto";
+import { IAuthQueryServices } from "@root/application/Services/Auth/queries/IAuthQueryServices";
+import { NextFunction } from "express-serve-static-core";
 
 
 
 @injectable()
-export class AuthLoginController extends BaseController {
+export class AuthentificationController extends BaseController {
     
-
-    constructor(@inject("IServices") protected authService: IServices) {
+    constructor(@inject("IAuthCommandServices") protected authCommandService: IAuthCommandServices,
+                @inject("IAuthQueryServices") protected authQueryService: IAuthQueryServices) {
         super();
     }
 
-    protected async executeImpl(): Promise<any> {
+    protected async register(req: Request, res: Response, next: NextFunction): Promise<any> {
         try {
-            const dto: LoginRequest = this.req.body as LoginRequest;
+            const dto: RegisterRequest = this.req.body as RegisterRequest;
            
-            const authResult = await this.authService.login(dto.Email, dto.Password);
+            const authResult = await this.authCommandService.register(dto.FirstName, dto.LastName ,dto.Email, dto.Password);
 
             const token: string = authResult.Token;
             
@@ -27,11 +28,13 @@ export class AuthLoginController extends BaseController {
             this.req.session = {jwt: token};
               
             
-            this.res.status(HTTP_STATUS.OK).json({ message: 'User is logged in', ...authResult });
+            this.res.status(HTTP_STATUS.OK).json({ message: 'User is registerd', ...authResult });
         } catch (error) {
             this.next(error);
         }
     }
+
+    
 }
 
 

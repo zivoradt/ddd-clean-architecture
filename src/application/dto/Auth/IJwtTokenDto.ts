@@ -1,4 +1,4 @@
-import { AuthPayload } from './IAuthResultDto';
+import { AuthPayload } from '../../Services/Auth/common/IAuthResultDto';
 
 
 export interface IJwtTokenDto{

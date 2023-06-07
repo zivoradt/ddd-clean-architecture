@@ -1,5 +1,5 @@
 import { User } from '@root/domain/entities/user';
-import { IJwtTokenDto } from './IJwtTokenDto';
+import { IJwtTokenDto } from '../../../dto/Auth/IJwtTokenDto';
 
 export interface AuthResult{
     User: User
