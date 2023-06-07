@@ -1,7 +1,7 @@
-
-export interface RegisterRequest{
+ export interface RegisterRequest{
     FirstName: string,
     LastName: string,
     Email: string,
     Password: string
-}
+} 
+

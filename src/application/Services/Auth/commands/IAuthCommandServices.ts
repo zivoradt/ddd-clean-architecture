@@ -1,7 +1,8 @@
+import { RegisterRequest } from "../common/registerDto";
 
 
 
 export interface IAuthCommandServices{
 
-    register (name: string, lastname:string, email:string, password:string): any;
+    register (registerRequest: RegisterRequest): any;
 };

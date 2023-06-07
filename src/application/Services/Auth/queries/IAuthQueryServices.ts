@@ -1,7 +1,8 @@
+import { LoginRequest } from "../common/loginDto";
 
 
 
 export interface IAuthQueryServices{
 
-    login (Email:string, Password:string): any;
+    login (loginRequest: LoginRequest): any;
 };

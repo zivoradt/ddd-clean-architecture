@@ -1,26 +1,25 @@
 import HTTP_STATUS from "http-status-codes";
 import { BaseController } from '../../../domain/core/infra/BaseController'
 import { inject, injectable } from "tsyringe";
-import { IAuthCommandServices } from "@root/application/Services/Auth/commands/IAuthCommandServices";
-import { RegisterRequest } from "@root/application/Services/Auth/common/registerDto";
 import { IAuthQueryServices } from "@root/application/Services/Auth/queries/IAuthQueryServices";
-import { NextFunction } from "express-serve-static-core";
+import { LoginRequest } from "@root/application/Services/Auth/common/loginDto";
 
 
 
 @injectable()
-export class AuthentificationController extends BaseController {
+export class AuthLoginController extends BaseController {
     
-    constructor(@inject("IAuthCommandServices") protected authCommandService: IAuthCommandServices,
+    
+    constructor(
                 @inject("IAuthQueryServices") protected authQueryService: IAuthQueryServices) {
         super();
     }
 
-    protected async register(req: Request, res: Response, next: NextFunction): Promise<any> {
+    protected async executeImpl(): Promise<any> {
         try {
-            const dto: RegisterRequest = this.req.body as RegisterRequest;
+            const loginRequest: LoginRequest = this.req.body as LoginRequest;
            
-            const authResult = await this.authCommandService.register(dto.FirstName, dto.LastName ,dto.Email, dto.Password);
+            const authResult = await this.authQueryService.login(loginRequest);
 
             const token: string = authResult.Token;
             
@@ -28,7 +27,7 @@ export class AuthentificationController extends BaseController {
             this.req.session = {jwt: token};
               
             
-            this.res.status(HTTP_STATUS.OK).json({ message: 'User is registerd', ...authResult });
+            this.res.status(HTTP_STATUS.OK).json({ message: 'User is logedin', ...authResult });
         } catch (error) {
             this.next(error);
         }
