@@ -1,44 +1,39 @@
-
-import HTTP_STATUS from "http-status-codes";
-import { BaseController } from '../../../domain/core/infra/BaseController'
+import { IJwtTokenDto } from './../../../application/dto/Auth/IJwtTokenDto';
+import HTTP_STATUS  from "http-status-codes";
+import {BaseController} from '../../../domain/core/infra/BaseController';
+import { IServices } from '@root/domain/core/application/IServices';
+import { AuthResult } from "@root/application/Services/Auth/common/IAuthResultDto";
 import { inject, injectable } from "tsyringe";
-import { IAuthCommandServices } from "@root/application/Services/Auth/commands/IAuthCommandServices";
-import { RegisterRequest } from "@root/application/Services/Auth/common/registerDto";
-
-
+import { RegisterRequest } from '@root/application/Services/Auth/common/registerDto';
+import { Mediator } from '@root/mediator/Mediator';
+import { RegisterRequestt } from '@root/mediator/auth/request/RegisterRequest';
 
 @injectable()
-export class AuthRegisterController extends BaseController {
-    
-    
-    constructor(
-                @inject("IAuthCommandServices") protected authCommandService: IAuthCommandServices) {
+export class AuthRegisterController extends BaseController{
+   
+    constructor(@inject("Mediator") protected mediator: Mediator) {
         super();
     }
 
-    protected async executeImpl(): Promise<any> {
+    protected async executeImpl(): Promise<void> {
         try {
-            const registerRequest: RegisterRequest = this.req.body as RegisterRequest;
-           
-            const authResult = await this.authCommandService.register(registerRequest);
+            const dto: RegisterRequest = this.req.body as RegisterRequest;
 
-            const token: string = authResult.Token;
-
-            
+            const registerRequest = new RegisterRequestt(dto);
+            const authResult: AuthResult = await this.mediator.send(registerRequest);
             
 
-            this.req.session = {jwt: token};
-              
-            
-            this.res.status(HTTP_STATUS.OK).json({ message: 'User is registered', ...authResult });
+            this.req.session = {jwt: authResult.Token};
+
+            this.res.status(HTTP_STATUS.OK).json({ message: 'User is registerd', ...authResult });
         } catch (error) {
+            
             this.next(error);
         }
     }
 
-    
+        
 }
 
-
-
+    
 

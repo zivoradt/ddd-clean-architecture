@@ -13,8 +13,8 @@ export class AuthRouter extends BaseRouter{
     constructor() {
         super();
         
-        this.loginController = diContainer.authLoginController.resolve<AuthLoginController>(AuthLoginController);
-        this.registerController = diContainer.registerController.resolve<AuthRegisterController>(AuthRegisterController);
+        this.loginController = diContainer.mediator.resolve<AuthLoginController>(AuthLoginController);
+        this.registerController = diContainer.mediator.resolve<AuthRegisterController>(AuthRegisterController);
     }
 
     public routes():Router{

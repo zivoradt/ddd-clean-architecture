@@ -10,10 +10,9 @@ import { json, urlencoded } from "body-parser";
 import cookieSession from 'cookie-session';
 import cookieParser from 'cookie-parser';
 import { ErrorHandler } from './global/ErrorHandler';
-import { BaseError } from './global/BaseError';
-
-
-const logger1 = config.createLogger('Error');
+import { MediatorSystem } from './mediator/MediatorSystem';
+import { diContainer } from './dependencies/dependencies';
+import { Mediator } from './mediator/Mediator';
 
 
 const log: Logger  = config.createLogger('setupServer');
@@ -73,9 +72,10 @@ export class setupServer {
         process.on('unhandledRejection', (reason: Error)=>{
             throw reason;
         });
+    }
 
-          
-       
+    protected mediatorPattern(){
+        const mediatorSystem = new MediatorSystem(diContainer.mediator.resolve<Mediator>('Mediator'));
     }
 
     protected startRouter(app: Application) {
@@ -93,9 +93,11 @@ export class setupServer {
     protected startServer(app: Application){
         const httpSever: http.Server = new http.Server(app);
         this.httpServer(httpSever);
+       
     }
 
     public start():any{
+        this.mediatorPattern();
         this.cookieMiddleware(this.app);
         this.baseMiddlewere(this.app);
         this.startServer(this.app);

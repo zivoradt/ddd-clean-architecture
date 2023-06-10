@@ -5,6 +5,7 @@ import { databaseConnection } from '@root/databaseSetup';
 
 
 
+
 export class App{
 
     public async initialize(): Promise<void> {

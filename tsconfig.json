@@ -117,6 +117,7 @@
         "/src/api/controllers/*"
       ],
       "@root/*": ["src/*"],
+      "@mediator": ["src/mediator/*"],
       "@domain/*": ["src/domain/*"],
       "@appliciation/*": ["src/application/*"],
       "@routes/*": ["src/api/routes/*"],
