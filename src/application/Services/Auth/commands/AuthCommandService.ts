@@ -7,6 +7,9 @@ import { User } from "@root/domain/entities/user";
 import { BadRequest } from "@root/global/BaseError";
 import { IAuthCommandServices } from "./IAuthCommandServices";
 import { RegisterRequest } from "../common/registerDto";
+import { Mapping } from "@root/api/common/mapping/AuthentificationMapping";
+
+
 
 @injectable()
 export class AuthCommandService implements IAuthCommandServices {
@@ -15,6 +18,7 @@ export class AuthCommandService implements IAuthCommandServices {
   constructor(
     @inject("IJwtTokenGenerator") jwtTokenGenerator: IJwtTokenGenerator,
     @inject("IUserRepository") userRepository: IUserRepository
+
   ) {
     this.jwtTokenGenerator = jwtTokenGenerator;
     this.userRepository = userRepository;
@@ -45,8 +49,9 @@ export class AuthCommandService implements IAuthCommandServices {
 
     const dto: AuthResult = {
       User: newUser,
-      Token: token,
-    };
+      Token: token
+    }
+
     //return dto as AuthResult;
     return dto as AuthResult;
   }

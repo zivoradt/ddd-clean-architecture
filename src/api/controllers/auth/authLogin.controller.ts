@@ -20,6 +20,8 @@ export class AuthLoginController extends BaseController {
         try {
             const loginRequest: LoginRequest = this.req.body as LoginRequest;
 
+            
+
            const loginRequestt = new LoginRequestt(loginRequest)
             const authResult = await this.mediator.send(loginRequestt);
 

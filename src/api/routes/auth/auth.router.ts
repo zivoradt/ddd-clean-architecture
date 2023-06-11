@@ -5,8 +5,6 @@ import { Router } from 'express';
 import { AuthLoginController } from '@root/api/controllers/auth/authLogin.controller';
 import { AuthRegisterController } from '@root/api/controllers/auth/authRegister.controller';
 
-
-const cont = container
 export class AuthRouter extends BaseRouter{
     protected loginController: AuthLoginController;
     protected registerController: AuthRegisterController;

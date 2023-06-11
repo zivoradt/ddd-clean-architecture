@@ -8,6 +8,9 @@ import { BadRequest } from "@root/global/BaseError";
 import { User } from "@root/domain/entities/user";
 import { AuthResult } from "@root/application/Services/Auth/common/IAuthResultDto";
 import { RegisterRequest } from "@root/application/Services/Auth/common/registerDto";
+import { Mapping } from "@root/api/common/mapping/AuthentificationMapping";
+
+const mapper = new Mapping;
 
 @injectable()
 export class RegisterHandler implements IRequestHandler<RegisterRequestt>{
@@ -41,15 +44,14 @@ export class RegisterHandler implements IRequestHandler<RegisterRequestt>{
       );
   
       const token: string = await this.jwtTokenGenerator.generateToken(newUser);
-  
+
+      const newmap = new Mapping
       await this.userRepository.add(newUser);
-  
-      const dto: AuthResult = {
-        User: newUser,
-        Token: token,
-      };
-      //return dto as AuthResult;
-      return dto as AuthResult;
+
+      const authResult: AuthResult = newmap.authResultMap(newUser, token)
+
+
+      return authResult;
   }
 }
 

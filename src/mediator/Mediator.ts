@@ -14,6 +14,7 @@ export class Mediator{
     public async send<T extends IRequest>(request: T): Promise<any>{
         
         const requestType: string = request.constructor.name;
+        
         const handler: IRequestHandler<T> | undefined = this.handlers.get(requestType);
 
         
