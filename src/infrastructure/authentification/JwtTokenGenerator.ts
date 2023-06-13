@@ -36,4 +36,8 @@ export class JwtTokenGenerator implements IJwtTokenGenerator{
        
         return token;
     }
+
+    public exctractPayload(payload: string): any{
+        return jwt.verify(payload, config.SECRET_JWT!)
+    }
 }

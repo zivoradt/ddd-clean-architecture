@@ -9,10 +9,10 @@ import { config } from "@root/config";
 import { json, urlencoded } from "body-parser";
 import cookieSession from 'cookie-session';
 import cookieParser from 'cookie-parser';
-import { ErrorHandler } from './global/ErrorHandler';
 import { MediatorSystem } from './mediator/MediatorSystem';
 import { diContainer } from './dependencies/dependencies';
 import { Mediator } from './mediator/Mediator';
+import { ErrorHandler } from './global/errorMiddleware/ErrorHandler';
 
 
 const log: Logger  = config.createLogger('setupServer');

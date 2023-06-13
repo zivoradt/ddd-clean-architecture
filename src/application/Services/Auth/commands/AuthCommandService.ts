@@ -4,7 +4,7 @@ import { inject, injectable } from "tsyringe";
 import { v4 as uuidv4 } from "uuid";
 import { IUserRepository } from "@root/application/common/interface/persistance/IUserRepository";
 import { User } from "@root/domain/entities/user";
-import { BadRequest } from "@root/global/BaseError";
+import { BadRequest } from "@root/global/errorMiddleware/BaseError";
 import { IAuthCommandServices } from "./IAuthCommandServices";
 import { RegisterRequest } from "../common/registerDto";
 import { Mapping } from "@root/api/common/mapping/AuthentificationMapping";

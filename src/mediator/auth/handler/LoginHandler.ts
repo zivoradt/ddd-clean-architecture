@@ -3,7 +3,7 @@ import { RegisterRequestt } from "../request/RegisterRequest";
 import { IRequestHandler } from "../../interfaces/IRequestHandler";
 import { IUserRepository } from "@root/application/common/interface/persistance/IUserRepository";
 import { inject, injectable } from "tsyringe";
-import { BadRequest } from "@root/global/BaseError";
+import { BadRequest } from "@root/global/errorMiddleware/BaseError";
 import { AuthResult } from "@root/application/Services/Auth/common/IAuthResultDto";
 import { LoginRequestt } from "../request/LoginRequest";
 

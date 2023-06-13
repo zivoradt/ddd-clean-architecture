@@ -2,7 +2,7 @@ import { IJwtTokenGenerator } from "@appliciation/common/interface/authentificat
 import { AuthResult } from "@root/application/Services/Auth/common/IAuthResultDto";
 import { inject, injectable } from "tsyringe";
 import { IUserRepository } from "@root/application/common/interface/persistance/IUserRepository";
-import { BadRequest, BaseError } from "@root/global/BaseError";
+import { BadRequest, BaseError } from "@root/global/errorMiddleware/BaseError";
 import { IAuthQueryServices } from "./IAuthQueryServices";
 import { LoginRequest } from "../common/loginDto";
 

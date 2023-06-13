@@ -1,7 +1,6 @@
 import { IJwtTokenDto } from './../../../application/dto/Auth/IJwtTokenDto';
 import HTTP_STATUS  from "http-status-codes";
 import {BaseController} from '../../../domain/core/infra/BaseController';
-import { IServices } from '@root/domain/core/application/IServices';
 import { AuthResult } from "@root/application/Services/Auth/common/IAuthResultDto";
 import { inject, injectable } from "tsyringe";
 import { RegisterRequest } from '@root/application/Services/Auth/common/registerDto';

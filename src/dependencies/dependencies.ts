@@ -9,6 +9,7 @@ import { IUserRepository } from '@root/application/common/interface/persistance/
 import { AuthQueryService } from '@root/application/Services/Auth/queries/AuthQueryService';
 import { Mediator } from '@root/mediator/Mediator';
 import container1  from 'tsyringe';
+import { DinnerContorller } from '@root/api/controllers/dinner/dinner.controller';
 
 
 
@@ -19,11 +20,13 @@ export class Dependencies{
     public registerController: DependencyContainer;
     public authLoginController: DependencyContainer
     public mediator: DependencyContainer;
+    public dinner: DependencyContainer;
 
     constructor(container: DependencyContainer) {
         this.registerController = container;
         this.mediator = container.createChildContainer();
         this.authLoginController = container;
+        this.dinner = container.createChildContainer();
         this.diContainer();       
     }
 
@@ -33,6 +36,7 @@ export class Dependencies{
         
         
         this.mediator.registerSingleton('Mediator',  Mediator)
+        this.dinner.register('DinnerController', {useClass: DinnerContorller});
 
         this.authLoginController.register('IAuthQueryServices', { useClass: AuthQueryService});
 

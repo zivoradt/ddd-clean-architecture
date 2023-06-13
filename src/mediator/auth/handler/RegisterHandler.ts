@@ -4,7 +4,7 @@ import { IRequestHandler } from "../../interfaces/IRequestHandler";
 import { IUserRepository } from "@root/application/common/interface/persistance/IUserRepository";
 import { inject, injectable } from "tsyringe";
 import { v4 as uuidv4 } from "uuid";
-import { BadRequest } from "@root/global/BaseError";
+import { BadRequest } from "@root/global/errorMiddleware/BaseError";
 import { User } from "@root/domain/entities/user";
 import { AuthResult } from "@root/application/Services/Auth/common/IAuthResultDto";
 import { RegisterRequest } from "@root/application/Services/Auth/common/registerDto";
