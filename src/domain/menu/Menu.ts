@@ -17,9 +17,9 @@ export class Menu extends AggregateRoot<MenuId>{
     protected hostId: HostId; 
     protected _menuReviewId: MenuReviewId[] = [];
     protected _dinnerId: DinnerId[] = [];
-    protected readonly _menuSection: MenuSection[] = [];
+    protected  _menuSection: MenuSection[] = [];
 
-    private constructor(menuId: MenuId, name: string, description: string, hostId: HostId, averageRating: AverageRating, createdTime: Date, updatedTime: Date) {
+    private constructor(menuId: MenuId, name: string, description: string, hostId: HostId, averageRating: AverageRating, createdTime: Date, updatedTime: Date, sections: MenuSection[]) {
         super(menuId)
         this.name = name,
         this.description = description,
@@ -27,17 +27,18 @@ export class Menu extends AggregateRoot<MenuId>{
         this.averageRating = averageRating,
         this.createdDateTime = createdTime,
         this.updatedDateTime = updatedTime
+        this._menuSection = sections;
     }
 
-    public static create(name: string, description: string, hostId: HostId): Menu{
-        return new Menu(MenuId.createUnique(), name, description, hostId, AverageRating.createNew() , new Date(), new Date())
+    public static create(name: string, description: string, hostId: HostId, sections: MenuSection[]): Menu{
+        return new Menu(MenuId.createUnique(), name, description, hostId, AverageRating.createNew() , new Date(), new Date(), sections)
     }
 
-    public get dinnerItems(): readonly DinnerId[] {
+    public  dinnerItems(): DinnerId[] {
         return this._dinnerId;
       }
 
-    public get menuItems(): readonly MenuSection[] {
+    public  menuItems():  MenuSection[] {
         return this._menuSection;
       }
 

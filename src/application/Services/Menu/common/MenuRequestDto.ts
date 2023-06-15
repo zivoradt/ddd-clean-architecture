@@ -3,7 +3,7 @@
 export interface MenuRequestDto{
     name: string,
     description: string,
-    section: MenuSectionRequestDto[]
+    sections: MenuSectionRequestDto[]
 }
 
 export interface MenuSectionRequestDto{

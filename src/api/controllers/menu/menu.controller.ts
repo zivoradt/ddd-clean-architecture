@@ -1,7 +1,9 @@
 
+import { Mapping } from "@root/api/common/mapping/AuthentificationMapping";
 import { MenuRequestDto } from "@root/application/Services/Menu/common/MenuRequestDto";
 import { BaseController } from "@root/domain/core/infra/BaseController";
 import { Mediator } from "@root/mediator/Mediator";
+import { CreateMenuCommand } from "@root/mediator/menu/request/CreateMenuCommand";
 import HTTP_STATUS from 'http-status-codes';
 import { inject, injectable } from "tsyringe";
 
@@ -11,14 +13,23 @@ export class MenuContorller extends BaseController{
     constructor(@inject("Mediator") protected mediator: Mediator) {
         super();
     }
-    public executeImpl(): void {
+    public async executeImpl(): Promise<void> {
 
-        const menuRequest: MenuRequestDto = this.req.body;
+        const mapper = new Mapping();
 
-        const hostId: string = this.req.params;
+       const requestFromUser: MenuRequestDto = mapper.fromRequestBodyToMenuRequestDto(this.req);
 
-        const command = this.mediator.send()
+        const {hostId} = this.req.params;
 
-        this.res.status(HTTP_STATUS.OK).json({message: menuRequest})
+        const menuCommand: CreateMenuCommand = mapper.createMenuCommand(requestFromUser, hostId);
+
+        
+        const createdMenuOrNull = await this.mediator.send(menuCommand);
+
+        
+
+        //const command = this.mediator.send()
+
+        this.res.status(HTTP_STATUS.OK).json({message: requestFromUser})
     }
 }
