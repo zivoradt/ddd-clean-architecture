@@ -53,6 +53,6 @@ export class AuthCommandService implements IAuthCommandServices {
     }
 
     //return dto as AuthResult;
-    return dto as AuthResult;
+   return dto as AuthResult;
   }
 }

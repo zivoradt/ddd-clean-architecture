@@ -20,7 +20,7 @@ export class AuthMiddleware{
         const sessionPayload = req.session.jwt;
 
         try {
-            const extractPayload = jwt.verify(sessionPayload, config.SECRET_JWT!);
+            jwt.verify(sessionPayload, config.SECRET_JWT!);
         } catch (error) {
             throw new NotAuthorized('Token is invalid');
         }
