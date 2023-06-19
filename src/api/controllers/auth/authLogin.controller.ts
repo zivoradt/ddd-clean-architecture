@@ -21,6 +21,7 @@ export class AuthLoginController extends BaseController {
             const loginRequest: LoginRequest = this.req.body as LoginRequest;
             
            const loginRequestt = new LoginRequestt(loginRequest)
+
             const authResult = await this.mediator.send(loginRequestt);
 
             this.req.session = {jwt: authResult.Token};

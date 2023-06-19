@@ -4,10 +4,12 @@ import { CreateMenuCommand, MenuSectionCommand } from "@root/mediator/menu/reque
 import { merge } from "lodash"
 import {Request} from 'express'
 import { MenuItemCommand } from '../../../mediator/menu/request/CreateMenuCommand';
+import { HostId } from '../../../domain/host/valueObjects/HostId';
 import { Menu } from "@root/domain/menu/Menu";
-import { HostId } from "@root/domain/host/valueObjects/HostId";
 import { MenuSection } from "@root/domain/menu/entities/MenuSection";
-import { MenuItem } from "@root/domain/menu/entities/MenuItem";
+import { MenuItemsResponseDto, MenuResponseDto, MenuSectionResponseDto } from '../../../application/Services/Menu/common/MenuResponseDto';
+import { json } from 'body-parser';
+
 export class Mapping{
     protected merge = merge;
     constructor() {
@@ -19,41 +21,53 @@ export class Mapping{
     }   
 
 
-    public fromRequestBodyToMenuRequestDto(req: Request): MenuRequestDto {
+    public menuToResponseDTO(menu: Menu): any {
         
     
-        const menuRequest: MenuRequestDto = req.body;
+        const menuEnttiy: Menu = menu;
 
-        
-      
-        const menuSectionRequest: MenuSectionRequestDto[] = menuRequest.sections.map((sectio: any) => {
-          const { name, description, items } = sectio;
-          const menuItems: MenuItemsRequestDto[] = items.map((item: any) => {
-            const { name, description } = item;
-            return {
-              name,
-              description,
-            } as MenuItemsRequestDto;
-          });
+        const menuSection: MenuSection[] = menu.menuItems()
+
+        const menuSectionDto: MenuSectionResponseDto[] = menuSection.map((section)=>{
           return {
-            name,
-            description,
-            items: menuItems,
-          } as MenuSectionRequestDto;
-        });
-      
-        menuRequest.sections = menuSectionRequest
+            id: section._id.value(),
+            name: section.getName(),
+            description: section.getDescription(),
+            items: section.items.map((item)=>{
+              return {
+                id: item._id.value(),
+                name: item.getName(),
+                description: item.getDescription()
+              } ;
+            })
+          }
+        })
         
-      
-        return menuRequest;
+
+        const menuResponseDto: MenuResponseDto = {
+          id: menuEnttiy.getID().value(),
+          name: menuEnttiy.getName(),
+          description: menuEnttiy.getDescription(),
+          averageRating: menuEnttiy.getAverageRating().getAveragerRating(),
+          hostId: menuEnttiy.getHostId().value(),
+          dinerId: menuEnttiy.getDinnerItems().map((item) => item.value()),
+          menuReviewId: menuEnttiy.getMenuReviewsIds().map((item)=> item.value()),
+          createdDateTime: menuEnttiy.getCreatedDateTime(),
+          updatedDateTime: menuEnttiy.getUpdatedDateTime(),
+          section: menuSectionDto
+
+        }
+
+        return menuResponseDto;
+
       }
     
-     public createMenuCommand(menuRequestDto: MenuRequestDto, hostId: string): CreateMenuCommand{
+     public createMenuCommand(req: Request, hostid: string): CreateMenuCommand{
         const menuCommand: CreateMenuCommand = {
-            hostId: hostId,
-            name: menuRequestDto.name,
-            description: menuRequestDto.description,
-            sections: menuRequestDto.sections,
+            hostId: hostid,
+            name: req.body.name,
+            description: req.body.description,
+            sections: req.body.sections,
         
         }
 
@@ -77,21 +91,21 @@ export class Mapping{
 
         
 
-        const menu: Menu = Menu.create(
+        const menu: CreateMenuCommand = new CreateMenuCommand(
             menuCommand.name,
+            menuCommand.hostId,
             menuCommand.description,
-            HostId.createUnique(),
             menuCommand.sections.map((section) =>
-              MenuSection.create(
+              new MenuSectionCommand(
                 section.name,
                 section.description,
-                section.items.map((item) => MenuItem.create(item.name, item.description))
+                section.items.map((item) => new MenuItemCommand(item.name, item.description))
               )
             )
           );
 
           
-          return  menuCommand;
+          return  menu;
      } 
 
 

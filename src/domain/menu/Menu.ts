@@ -34,9 +34,13 @@ export class Menu extends AggregateRoot<MenuId>{
         return new Menu(MenuId.createUnique(), name, description, hostId, AverageRating.createNew() , new Date(), new Date(), sections)
     }
 
-    public  dinnerItems(): DinnerId[] {
+    public getDinnerItems(): DinnerId[] {
         return this._dinnerId;
       }
+
+    public getMenuReviewsIds(){
+        return this._menuReviewId;
+    }
 
     public  menuItems():  MenuSection[] {
         return this._menuSection;
@@ -59,6 +63,10 @@ export class Menu extends AggregateRoot<MenuId>{
     }
     public getUpdatedDateTime(){
         return this.updatedDateTime;
+    }
+
+    public getID(){
+        return this._id;
     }
 
 }

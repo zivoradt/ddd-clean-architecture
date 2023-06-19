@@ -14,6 +14,5 @@ export interface MenuSectionRequestDto{
 
 export interface MenuItemsRequestDto{
     name: string,
-    description: string,
-    
+    description: string;
 }

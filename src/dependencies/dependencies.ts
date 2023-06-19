@@ -10,6 +10,7 @@ import { AuthQueryService } from '@root/application/Services/Auth/queries/AuthQu
 import { Mediator } from '@root/mediator/Mediator';
 import container1  from 'tsyringe';
 import { DinnerContorller } from '@root/api/controllers/dinner/dinner.controller';
+import { MenuRepository } from '@root/infrastructure/persistance/MenuRepository';
 
 
 
@@ -36,6 +37,7 @@ export class Dependencies{
         
         
         this.mediator.registerSingleton('Mediator',  Mediator)
+        this.mediator.register('IMenuRepository', {useClass: MenuRepository});
         this.dinner.register('DinnerController', {useClass: DinnerContorller});
 
         this.authLoginController.register('IAuthQueryServices', { useClass: AuthQueryService});

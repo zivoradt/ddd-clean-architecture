@@ -1,10 +1,13 @@
+import { AverageRatingValues } from "@root/domain/common/valueObjects/AverageRating"
+import { MenuItemId } from "@root/domain/menu/valueObjects/MenuItemId"
+import { MenuSectionId } from "@root/domain/menu/valueObjects/MenuSectionId"
 
 
 export interface MenuResponseDto{
     id: string,
     name: string,
     description: string,
-    averageRating: number,
+    averageRating: AverageRatingValues,
     hostId: string,
     dinerId: string[],
     menuReviewId: string[],

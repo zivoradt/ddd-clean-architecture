@@ -15,11 +15,20 @@ export class HostId extends ValueObject<ID>{
         return this.props.id
     }
 
-    public static createUnique(): HostId{
-        const id: ID = {
-            id: uuidv4()
+    public static createUnique(Id?: string): HostId{
+
+        if(Id){
+            const idd: ID = {
+                id: Id
+            }
+            return new HostId(idd)
         }
-        return new HostId(id)
+        else{
+            const id: ID = {
+                id: uuidv4()
+            }
+            return new HostId(id)
+        }
     }
 }
 

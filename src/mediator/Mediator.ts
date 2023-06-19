@@ -15,6 +15,7 @@ export class Mediator{
         
         const requestType: string = request.constructor.name;
         
+        
         const handler: IRequestHandler<T> | undefined = this.handlers.get(requestType);
 
         

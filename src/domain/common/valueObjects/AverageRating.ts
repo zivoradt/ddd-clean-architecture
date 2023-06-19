@@ -29,4 +29,13 @@ export class AverageRating extends ValueObject<AverageRatingValues>{
         this.props.Values = ((this.props.Values * this.props.NumRating) - rating.value()) / --this.props.NumRating;
     }
 
+    public getValue(){
+        return this.props.Values;
+    }
+
+    public getAveragerRating(){
+        return this.props;
+    }
+
+
 }
