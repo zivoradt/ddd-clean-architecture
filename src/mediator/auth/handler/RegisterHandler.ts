@@ -25,13 +25,14 @@ export class RegisterHandler implements IRequestHandler<RegisterRequestt>{
   }
 
   public async handle(request: RegisterRequest): Promise<any> {
-    const userOrNull = await this.userRepository.getUserByEmail(
+       const userOrNull = await this.userRepository.getUserByEmail(
         request.Email
-      );
+      ); 
   
+      
       if (userOrNull != null) {
         throw new BadRequest("User already exist");
-      }
+      }  
   
       const userId =  uuidv4();
   

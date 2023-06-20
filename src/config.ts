@@ -11,6 +11,9 @@ export class Config{
     public TOKEN_KEY2: string | undefined;
     public NODE_ENV: string | undefined;
     public SECRET_JWT: string | undefined;
+    public DEV_PORT: string | undefined;
+    public DB_PASSWORD: string | undefined;
+    public DEV_HOST: string | undefined;
 
     constructor(){
        this.PORT = process.env.PORT || '5000';
@@ -19,6 +22,9 @@ export class Config{
        this.TOKEN_KEY2 = process.env.TOKEN_KEY2 || "";
        this.NODE_ENV = process.env.NODE_ENV || "";
        this.SECRET_JWT = process.env.SECRET_JWT || "";
+       this.DEV_PORT = process.env.DEV_PORT || '5000';
+       this.DB_PASSWORD = process.env.DB_PASSWORD || "";
+       this.DEV_HOST = process.env.DEV_HOST || "";
     }
 
     public validateConfig(){

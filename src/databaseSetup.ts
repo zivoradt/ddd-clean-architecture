@@ -1,25 +1,43 @@
-import mongoose, { Mongoose, connect } from "mongoose";
+import "reflect-metadata"
 import { config } from "./config";
 import Logger from "bunyan";
-import { error } from "console";
+import {DataSource, DataSourceOptions, EntityManager} from 'typeorm'
+import {  RegisterUserr } from "./infrastructure/persistance/entities/RegisterUser";
+import { injectable } from "tsyringe";
 
 const log: Logger = config.createLogger('database');
 
+const databaseConfig: DataSourceOptions = {
+    type: "postgres",
+    host: config.DEV_HOST,
+    port: config.DEV_PORT as unknown as number,
+    username: "postgres",
+    password: config.DB_PASSWORD,
+    database: "postgres",
+    entities: [RegisterUserr],
+    synchronize: true,
+    logging: false,
+}
 
+@injectable()
 export class DatabaseConnection{
-    private moongoBClient: Mongoose;
+    private posgresql: DataSource;
     constructor(){
-        this.moongoBClient = mongoose;
+        this.posgresql = new DataSource(databaseConfig)
     }
+
     public async connect(){
-       this.moongoBClient.connect(`${config.MONGO_DB}`).
+       this.posgresql.initialize().
        then(()=>{
         log.info("Database is connected");
        }).catch((error)=>{
         log.error('Error to connect to database', error);
        })
-       this.moongoBClient.connection.on('disconnected', connect);
+       
+    }
+
+    public share(): DataSource{
+        return this.posgresql
     }
     
 }
-export const databaseConnection: DatabaseConnection =new DatabaseConnection();

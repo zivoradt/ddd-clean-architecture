@@ -4,13 +4,16 @@ import {container,   DependencyContainer} from 'tsyringe';
 import { JwtTokenGenerator } from '@root/infrastructure/authentification/JwtTokenGenerator';
 import { JwtSettings } from '../infrastructure/authentification/JwtSettings';
 import { DateTimeProvider } from '@root/infrastructure/services/DateTimeProvider';
-import { UserRepository } from '@root/infrastructure/persistance/UserRepository';
-import { IUserRepository } from '@root/application/common/interface/persistance/IUserRepository';
+import { UserRepository } from '@root/infrastructure/persistance/repositories/UserRepository';
+
 import { AuthQueryService } from '@root/application/Services/Auth/queries/AuthQueryService';
 import { Mediator } from '@root/mediator/Mediator';
 import container1  from 'tsyringe';
 import { DinnerContorller } from '@root/api/controllers/dinner/dinner.controller';
-import { MenuRepository } from '@root/infrastructure/persistance/MenuRepository';
+import { MenuRepository } from '@root/infrastructure/persistance/repositories/MenuRepository';
+import { IUserRepository } from '@root/application/common/interface/persistance/IUserRepository';
+import { DatabaseConnection } from '@root/databaseSetup';
+import { DatabaseContext } from '@root/infrastructure/persistance/DBContext';
 
 
 
@@ -43,6 +46,8 @@ export class Dependencies{
         this.authLoginController.register('IAuthQueryServices', { useClass: AuthQueryService});
 
         this.registerController.registerSingleton<IUserRepository>('IUserRepository', UserRepository);
+        this.registerController.registerSingleton<DatabaseConnection>('DatabaseConnection', DatabaseConnection);
+        this.registerController.registerSingleton<DatabaseContext>('DatabaseContext', DatabaseContext);
         this.registerController.register('DateProvider', {useClass: DateTimeProvider});
         this.registerController.register('JwtSettings', {useClass: JwtSettings})
         this.registerController.register('IJwtTokenGenerator', {useClass: JwtTokenGenerator});

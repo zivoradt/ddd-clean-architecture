@@ -9,7 +9,7 @@ import { MenuSection } from "@root/domain/menu/entities/MenuSection";
 import { MenuItem } from "@root/domain/menu/entities/MenuItem";
 import { IMenuRepository } from "@root/application/common/interface/persistance/IMenuRepository";
 import { inject, injectable } from "tsyringe";
-import { MenuRepository } from "@root/infrastructure/persistance/MenuRepository";
+import { MenuRepository } from "@root/infrastructure/persistance/repositories/MenuRepository";
 
 @injectable()
 export class CreateMenuCommandHandler
