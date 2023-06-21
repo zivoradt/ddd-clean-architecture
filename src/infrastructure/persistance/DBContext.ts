@@ -1,21 +1,22 @@
 import "reflect-metadata";
-import { DataSource, EntityManager } from "typeorm";
-import { DatabaseConnection } from "@root/databaseSetup";
+import {  DataSource, EntityManager, Repository } from "typeorm";
+import { DatabaseConnection, databaseConnection } from "@root/databaseSetup";
 import { inject, injectable } from "tsyringe";
 import { diContainer } from "@root/dependencies/dependencies";
+import { RegisterUserr } from './entities/RegisterUser';
 
 
 @injectable()
 export class DatabaseContext{
-    public _db: DataSource;
-
+    public db: Repository<RegisterUserr>
+    
     constructor(@inject('DatabaseConnection')db: DatabaseConnection) {
-        this._db = db.share()
+         this.db = db.getRepository(RegisterUserr)
     }
 
-    public getManager(){
-        return this._db
-    }
+
+
+    
 
 
 }

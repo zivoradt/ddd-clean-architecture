@@ -2,7 +2,7 @@ import 'reflect-metadata'
 import express, { Express } from 'express';
 import  {setupServer}  from './setupServer';
 import {config} from './config';
-import { DatabaseConnection } from '@root/databaseSetup';
+import { DatabaseConnection, databaseConnection } from '@root/databaseSetup';
 import { inject, injectable } from 'tsyringe';
 import { diContainer } from './dependencies/dependencies';
 
@@ -12,13 +12,13 @@ import { diContainer } from './dependencies/dependencies';
 export class App{
     private db: DatabaseConnection;
 
-    constructor() {
-        this.db = diContainer.registerController.resolve(DatabaseConnection);
+    constructor(db: DatabaseConnection) {
+        this.db = db;
     }
     
     public async initialize(): Promise<void> {
         this.loadConfig();
-        await this.db.connect();
+        await this.db.connect()
         const app: Express =  express();
         const server: setupServer = new setupServer(app);
         server.start();
@@ -28,5 +28,5 @@ export class App{
     }
 }
 
-const application: App = new App();
+const application: App = new App(databaseConnection);
 application.initialize();

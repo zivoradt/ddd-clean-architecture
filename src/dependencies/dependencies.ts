@@ -12,7 +12,7 @@ import container1  from 'tsyringe';
 import { DinnerContorller } from '@root/api/controllers/dinner/dinner.controller';
 import { MenuRepository } from '@root/infrastructure/persistance/repositories/MenuRepository';
 import { IUserRepository } from '@root/application/common/interface/persistance/IUserRepository';
-import { DatabaseConnection } from '@root/databaseSetup';
+import { databaseConnection, DatabaseConnection } from '@root/databaseSetup';
 import { DatabaseContext } from '@root/infrastructure/persistance/DBContext';
 
 
@@ -46,7 +46,7 @@ export class Dependencies{
         this.authLoginController.register('IAuthQueryServices', { useClass: AuthQueryService});
 
         this.registerController.registerSingleton<IUserRepository>('IUserRepository', UserRepository);
-        this.registerController.registerSingleton<DatabaseConnection>('DatabaseConnection', DatabaseConnection);
+        this.registerController.register('DatabaseConnection', { useValue: databaseConnection });
         this.registerController.registerSingleton<DatabaseContext>('DatabaseContext', DatabaseContext);
         this.registerController.register('DateProvider', {useClass: DateTimeProvider});
         this.registerController.register('JwtSettings', {useClass: JwtSettings})

@@ -3,15 +3,18 @@ import { IUserRepository } from '@root/application/common/interface/persistance/
 import { DatabaseContext } from '../DBContext';
 import {  RegisterUserr } from '../entities/RegisterUser';
 import { inject, injectable } from 'tsyringe';
-import { Repository } from 'typeorm';
+import { DataSource, EntityManager, Repository } from 'typeorm';
+import { diContainer } from '@root/dependencies/dependencies';
+import { DatabaseConnection } from '@root/databaseSetup';
+import { Entity } from '@root/domain/models/Entity';
 
 @injectable()
 export class UserRepository implements IUserRepository {
 
-    private  dbContext: Repository<RegisterUserr>;
+    private  database: DatabaseContext;
 
-    constructor(@inject("DatabaseContext")_db: DatabaseContext) {
-      this.dbContext = _db.getManager().getRepository(RegisterUserr)
+    constructor(@inject('DatabaseContext')db: DatabaseContext) {
+      this.database = db
     }
 
     public async add(user: User) {
@@ -22,11 +25,11 @@ export class UserRepository implements IUserRepository {
       registerUser.Email = user.Email;
       registerUser.Password = user.Password;
     
-      await registerUser.save(); 
+      await this.database.db.save(registerUser)
     }
 
   public async getUserByEmail(email: string): Promise<any | null> {
-    return  await RegisterUserr.findOneBy({Email: email});
+    return  await this.database.db.findOneBy({Email: email});
   }
 
 }

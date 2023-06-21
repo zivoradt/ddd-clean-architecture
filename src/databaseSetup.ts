@@ -1,7 +1,7 @@
 import "reflect-metadata"
 import { config } from "./config";
 import Logger from "bunyan";
-import {DataSource, DataSourceOptions, EntityManager} from 'typeorm'
+import {BaseEntity, DataSource, DataSourceOptions, EntityManager, EntityTarget, ObjectLiteral, Repository} from 'typeorm'
 import {  RegisterUserr } from "./infrastructure/persistance/entities/RegisterUser";
 import { injectable } from "tsyringe";
 
@@ -24,10 +24,11 @@ export class DatabaseConnection{
     private posgresql: DataSource;
     constructor(){
         this.posgresql = new DataSource(databaseConfig)
+        
     }
 
     public async connect(){
-       this.posgresql.initialize().
+       await this.posgresql.initialize().
        then(()=>{
         log.info("Database is connected");
        }).catch((error)=>{
@@ -36,8 +37,10 @@ export class DatabaseConnection{
        
     }
 
-    public share(): DataSource{
-        return this.posgresql
+    public getRepository<T extends ObjectLiteral>(params: EntityTarget<T>): Repository<T>{
+        return this.posgresql.getRepository(params)
     }
     
 }
+
+export const databaseConnection: DatabaseConnection = new DatabaseConnection();

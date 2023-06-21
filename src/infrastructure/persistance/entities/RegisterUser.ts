@@ -2,7 +2,7 @@ import 'reflect-metadata'
 import { BaseEntity, Column, Entity, PrimaryColumn } from "typeorm";
 
 
-@Entity()
+@Entity('RegisterUser')
 export class RegisterUserr extends BaseEntity{
     @PrimaryColumn()
     id!: string
