@@ -3,27 +3,27 @@
 This project is a practice exercise for developing a dinner reservation application with Domain-Driven Design (DDD) and Clean Architecture. The goal is to create a scalable and maintainable software architecture while focusing on modeling business domains, encapsulating logic, and maintaining modularity. The application enables searching and booking dinner reservations at restaurants, emphasizing separation of concerns and clear boundaries between application layers. Through this project, we aim to enhance our understanding of DDD and Clean Architecture concepts in practical implementation.
 
 #Table of Contents
-*Introduction
-*Technologies
-*Installation
-*Usage
-*Docker Compose
-*Contributing
-*License
-*Introduction
+•Introduction
+•Technologies
+•Installation
+•Usage
+•Docker Compose
+•Contributing
+•License
+•Introduction
 
 
 #Technologies
 List the technologies used in the project, such as:
 
-*Node.js
-*Express.js
-*PostgreSQL
-*Docker
-*TypeScript
-*Nodemon
-*Bunyan
-*Installation
+•Node.js
+•Express.js
+•PostgreSQL
+•Docker
+•TypeScript
+•Nodemon
+•Bunyan
+•Installation
 
 #Clone the repository:
 
